@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="input" format="json">
+      <types:shape format="weave" example="examples/output.json"><![CDATA[%dw 2.0
+
+type input = Array<{|  BATCH_FILE_NAME: String,   PRPR_ID: String,   ERROR_TYPE: String,   ERROR_DESC: String|}> {"example": "[{\\\"BATCH_FILE_NAME\\\":\\\"\\\",\\\"PRPR_ID\\\":\\\"\\\",\\\"ERROR_TYPE\\\":\\\"\\\",\\\"ERROR_DESC\\\":\\\"\\\"},{\\\"BATCH_FILE_NAME\\\":\\\"\\\",\\\"PRPR_ID\\\":\\\"\\\",\\\"ERROR_TYPE\\\":\\\"\\\",\\\"ERROR_DESC\\\":\\\"\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#83f55d65-a35d-4f95-af71-a7f1b282a0a6">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

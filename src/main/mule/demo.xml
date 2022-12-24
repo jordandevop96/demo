@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<flow name="demoFlow" doc:id="e5bd4790-5ac2-4b03-a8ee-d9cf60f9e694" >
+		<file:listener doc:name="On New or Updated File" doc:id="31914e1e-ae38-464c-80c1-703d2bb3bfba" directory="C:\Users\saies\OneDrive\Desktop\TEST\SOURCE" moveToDirectory="C:\Users\saies\OneDrive\Desktop\TEST\ARCHIVE" autoDelete="true">
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="DAYS" />
+			</scheduling-strategy>
+		</file:listener>
+		<file:write doc:name="Write" doc:id="76effa9a-a695-40c8-825c-122de49cf804" path="#['C:\Users\saies\OneDrive\Desktop\TEST\DESTINATION\\' ++ attributes.fileName]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="fcfcf7c5-d6fe-4326-bd5d-31b7310c7e9b" message="done"/>
+	</flow>
+	<flow name="demoFlow1" doc:id="9a152dff-1cd9-45ef-9ab7-f034dd9f9a1e" >
+		<file:listener doc:name="On New or Updated File" doc:id="9af6f257-1de4-4c4a-be79-03a53f8003ef" directory="C:\Users\saies\OneDrive\Desktop\TEST\DESTINATION" moveToDirectory="C:\Users\saies\OneDrive\Desktop\TEST\ARCHIVE_TWO" autoDelete="true" timeBetweenSizeCheck="2" timeBetweenSizeCheckUnit="MINUTES">
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="7ae895c3-213a-4547-95a5-52625f15d2f3" message='#["Received file :" ++ attributes.fileName]'/>
+		<file:write doc:name="Write" doc:id="18e523bd-5884-474a-9223-a877ebfaa2fb" path="#['C:\Users\saies\OneDrive\Desktop\TEST\DESTINATION_TWO\\' ++ attributes.fileName]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5b8971e6-7778-4212-b945-edae25540167" message="done 2"/>
+	</flow>
+</mule>
